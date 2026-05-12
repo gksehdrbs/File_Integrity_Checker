@@ -115,8 +115,8 @@ Main (애플리케이션 진입점)
 
 ### 1. 프로젝트 클론
 ```bash
-git clone https://github.com/yourusername/file-integrity-checker.git
-cd file-integrity-checker
+git clone https://github.com/gksehdrbs/File_Integrity_Checker.git
+cd File_Integrity_Checker
 ```
 
 ### 2. 컴파일
@@ -140,7 +140,7 @@ java Main
 ## 📊 프로젝트 구조
 
 ```
-file-integrity-checker/
+File_Integrity_Checker/
 │
 ├── src/
 │   ├── main/
