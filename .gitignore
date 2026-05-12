@@ -1,0 +1,48 @@
+# Compiled Java files
+*.class
+*.jar
+*.war
+*.ear
+
+# IDE and Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+*.sublime-project
+*.sublime-workspace
+.DS_Store
+
+# Build and Output
+bin/
+build/
+dist/
+target/
+out/
+
+# Dependencies
+lib/
+.gradle/
+*.lock
+
+# Runtime generated files
+fileData.txt
+*.log
+*.tmp
+
+# OS specific
+Thumbs.db
+.DS_Store
+
+# Test coverage
+coverage/
+*.gcda
+*.gcno
+
+# Maven
+dependency-reduced-pom.xml
+
+# Gradle
+.gradle
+local.properties
