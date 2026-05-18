@@ -12,6 +12,9 @@ import java.security.NoSuchAlgorithmException;
  */
 public class HashEngine {
     
+    // 버퍼 크기 상수 (8KB - 대용량 파일 처리에 적합)
+    private static final int BUFFER_SIZE = 8192;
+    
     /**
      * 주어진 파일의 SHA-256 해시값을 계산하여 반환하는 메소드
      * 
@@ -21,13 +24,40 @@ public class HashEngine {
      * @throws NoSuchAlgorithmException SHA-256 알고리즘 미지원
      */
     public String calculateHash(String filePath) throws IOException, NoSuchAlgorithmException {
-        // TODO: 구현할 메소드
-        // 1. MessageDigest.getInstance("SHA-256") 로 해시 객체 생성
-        // 2. BufferedInputStream으로 파일을 읽음 (버퍼링 처리)
-        // 3. 읽은 바이트를 해시 객체에 업데이트
+        // 1. MessageDigest.getInstance("SHA-256")로 해시 객체 생성
+        MessageDigest digest = MessageDigest.getInstance("SHA-256");
+        
+        // 2. BufferedInputStream으로 파일을 읽음 (try-with-resources로 자동 자원 해제)
+        try (FileInputStream fis = new FileInputStream(filePath);
+             BufferedInputStream bis = new BufferedInputStream(fis)) {
+            
+            byte[] buffer = new byte[BUFFER_SIZE];
+            int bytesRead;
+            
+            // 3. 읽은 바이트를 해시 객체에 업데이트 (파일 끝까지 반복)
+            while ((bytesRead = bis.read(buffer)) != -1) {
+                digest.update(buffer, 0, bytesRead);
+            }
+        }
+        
         // 4. 최종 해시값을 바이트 배열로 얻음
-        // 5. 바이트 배열을 Integer.toHexString()을 사용해 16진수 문자열로 변환
+        byte[] hashBytes = digest.digest();
+        
+        // 5. 바이트 배열을 16진수 문자열로 변환
+        StringBuilder hexString = new StringBuilder();
+        for (byte b : hashBytes) {
+            // 바이트를 부호 없는 정수로 변환 (0xff & b) 후 16진수 문자열로 변환
+            String hex = Integer.toHexString(0xff & b);
+            
+            // 한 자리 16진수는 앞에 '0'을 붙여 두 자리로 맞춤
+            // (예: 0x0a → "a"가 아닌 "0a"로 통일)
+            if (hex.length() == 1) {
+                hexString.append('0');
+            }
+            hexString.append(hex);
+        }
+        
         // 6. 결과 문자열 반환
-        return null;
+        return hexString.toString();
     }
 }
